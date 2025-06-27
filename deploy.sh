@@ -20,10 +20,11 @@ echo "✅ Docker is running"
 echo "📁 Creating directories..."
 mkdir -p data output
 
-echo "📦 Pulling OCR File Converter..."
+echo "📦 Pulling OCR File Converter (v1.1 - Multi-Platform)..."
 docker pull truongginjs/ocr-converter:latest
 
 echo "✅ Image pulled successfully!"
+echo "🎯 Platform: Automatically selected for your architecture"
 echo ""
 
 # Show usage options

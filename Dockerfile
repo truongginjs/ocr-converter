@@ -1,5 +1,5 @@
-# Use Python slim image optimized for ARM64
-FROM --platform=linux/arm64 python:3.11-slim
+# Use Python slim image for multi-platform builds
+FROM python:3.11-slim
 
 # Set working directory
 WORKDIR /app

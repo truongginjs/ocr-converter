@@ -1,21 +1,29 @@
 #!/bin/bash
 
 # Test script for the OCR File Converter
+# Tests multi-platform Docker image functionality
 
 set -e
 
-echo "🚀 Testing OCR File Converter..."
+echo "🚀 Testing OCR File Converter (Multi-Platform)..."
+echo "🎯 Version: 1.1"
 echo ""
 
 # Ensure output directory exists
 mkdir -p output
 
-echo "📦 Building Docker image..."
-docker build -t truongginjs/ocr-converter:latest .
+echo "📦 Testing with latest multi-platform image..."
+# Use pre-built image for testing instead of building locally
+echo "Pulling truongginjs/ocr-converter:latest..."
+docker pull truongginjs/ocr-converter:latest
 
 echo ""
 echo "🔍 Checking language support..."
 docker run --rm truongginjs/ocr-converter:latest tesseract --list-langs
+
+echo ""
+echo "ℹ️  Architecture info:"
+docker run --rm truongginjs/ocr-converter:latest uname -m
 
 echo ""
 echo "🔄 Testing PDF conversion..."

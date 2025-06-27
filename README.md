@@ -8,12 +8,12 @@ A powerful Python-based document converter application that performs Optical Cha
 - **Multiple Output Formats**: Plain text (TXT) or structured JSON
 - **OCR Engines**: Tesseract and EasyOCR support
 - **Multi-language Support**: English and Vietnamese (v0.2+), with easy expansion for more languages
-- **ARM64 Optimized**: Built specifically for Apple Silicon chips
+- **Multi-Platform Support**: Compatible with both ARM64 (Apple Silicon) and AMD64 architectures
 - **Batch Processing**: Convert multiple files at once
 - **REST API**: Web service for programmatic access
 - **CLI Interface**: Command-line tool for batch operations
 - **Image Preprocessing**: Automatic image enhancement for better OCR accuracy
-- **Docker Ready**: Pre-built images available on Docker Hub
+- **Docker Ready**: Pre-built multi-platform images available on Docker Hub
 
 ## Quick Start
 
@@ -21,11 +21,11 @@ A powerful Python-based document converter application that performs Optical Cha
 
 **Pull and run the latest version:**
 ```bash
-# Pull the latest image (includes Vietnamese support)
+# Pull the latest image (multi-platform support)
 docker pull truongginjs/ocr-converter:latest
 
 # Or pull a specific version
-docker pull truongginjs/ocr-converter:0.2
+docker pull truongginjs/ocr-converter:1.1
 
 # Run the container
 docker run -d \
@@ -33,10 +33,11 @@ docker run -d \
   -p 8000:8000 \
   -v $(pwd)/input:/app/input \
   -v $(pwd)/output:/app/output \
-  truongginjs/ocr-converter:0.2
+  truongginjs/ocr-converter:latest
 ```
 
 **Version History:**
+- `1.1` - Multi-platform support (ARM64 & AMD64), improved architecture compatibility
 - `0.2` - Added Vietnamese language support
 - `latest` - Always points to the most recent stable version
 
@@ -64,25 +65,25 @@ docker-compose run --rm document-converter-cli /app/input -o /app/output -f json
 ```bash
 # Convert single file (default English)
 docker run --rm -v $(pwd)/data:/app/input -v $(pwd)/output:/app/output \
-  truongginjs/ocr-converter:0.2 python converter.py /app/input/1.pdf -o /app/output -f txt
+  truongginjs/ocr-converter:latest python converter.py /app/input/1.pdf -o /app/output -f txt
 
 # Convert with Vietnamese language support
 docker run --rm -v $(pwd)/data:/app/input -v $(pwd)/output:/app/output \
-  truongginjs/ocr-converter:0.2 python converter.py /app/input/1.pdf -o /app/output -f txt -l vie
+  truongginjs/ocr-converter:latest python converter.py /app/input/1.pdf -o /app/output -f txt -l vie
 
 # Convert with multiple languages
 docker run --rm -v $(pwd)/data:/app/input -v $(pwd)/output:/app/output \
-  truongginjs/ocr-converter:0.2 python converter.py /app/input/1.pdf -o /app/output -f json -l eng,vie
+  truongginjs/ocr-converter:latest python converter.py /app/input/1.pdf -o /app/output -f json -l eng,vie
 
 # Convert entire directory
 docker run --rm -v $(pwd)/data:/app/input -v $(pwd)/output:/app/output \
-  truongginjs/ocr-converter:0.2 python converter.py /app/input -o /app/output -f json
+  truongginjs/ocr-converter:latest python converter.py /app/input -o /app/output -f json
 ```
 
 **Run web service:**
 ```bash
 docker run --rm -p 8000:8000 -v $(pwd)/data:/app/input -v $(pwd)/output:/app/output \
-  truongginjs/ocr-converter:0.2 python api.py
+  truongginjs/ocr-converter:latest python api.py
 ```
 
 ## Usage Examples
@@ -373,7 +374,14 @@ MIT License - Feel free to use and modify as needed.
 
 ## Changelog 📝
 
-### Version 0.2 (Current)
+### Version 1.1 (Current)
+- 🎯 **Multi-Platform Support**: Now builds for both ARM64 and AMD64 architectures
+- 🔧 Improved Docker buildx integration for seamless cross-platform deployment
+- 📦 Enhanced publishing pipeline with automated multi-platform builds
+- ✅ Maintained full compatibility with previous features (English + Vietnamese)
+- 🚀 Available on Docker Hub as `truongginjs/ocr-converter:1.1`
+
+### Version 0.2
 - ✅ Added Vietnamese language support (`tesseract-ocr-vie`)
 - ✅ Updated documentation with comprehensive language support guide
 - ✅ Added instructions for adding more languages
@@ -405,4 +413,46 @@ We welcome contributions! Here are some ways you can help:
 - Add appropriate language packages to Dockerfile
 - Follow the existing code style
 
-## Development
+## Development & Publishing 🔧
+
+### Local Development
+```bash
+# Clone the repository
+git clone https://github.com/truongginjs/ocr-converter.git
+cd ocr-converter
+
+# Build locally
+./build.sh
+
+# Test the build
+./test.sh
+```
+
+### Publishing to Docker Hub
+For maintainers to publish new versions:
+
+```bash
+# Login to Docker Hub
+docker login
+
+# Build and publish multi-platform images
+./publish.sh
+```
+
+The `publish.sh` script will:
+- Build for both ARM64 and AMD64 architectures
+- Tag with version number (1.1) and latest
+- Push to Docker Hub automatically
+- Verify multi-platform compatibility
+
+### Manual Publishing
+```bash
+# Create multi-platform builder
+docker buildx create --name multiplatform-builder --use
+
+# Build and push
+docker buildx build --platform linux/arm64,linux/amd64 \
+  -t truongginjs/ocr-converter:1.1 \
+  -t truongginjs/ocr-converter:latest \
+  --push .
+```

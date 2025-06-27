@@ -9,7 +9,7 @@ A powerful Python-based document converter application that performs Optical Cha
 - **Multi-language Support**: Supports English and Vietnamese, with easy expansion for more languages
 - **REST API**: FastAPI-based web service for easy integration
 - **Docker Ready**: Fully containerized for consistent deployment
-- **ARM64 Optimized**: Built specifically for ARM64 architecture
+- **Multi-Platform Support**: Compatible with ARM64 (Apple Silicon) and AMD64 architectures
 - **Batch Processing**: Process multiple files simultaneously
 - **Image Preprocessing**: Automatic image enhancement for better OCR accuracy
 
@@ -40,8 +40,11 @@ chmod +x deploy.sh
 
 ### Option 2: Pull and Run
 ```bash
-# Pull the latest image (with Vietnamese support)
+# Pull the latest image (multi-platform support)
 docker pull truongginjs/ocr-converter:latest
+
+# Or pull specific version
+docker pull truongginjs/ocr-converter:1.1
 
 # Run the container
 docker run -d \

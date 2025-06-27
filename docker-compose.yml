@@ -1,10 +1,10 @@
 services:
   document-converter:
-    image: truongginjs/ocr-converter:latest
-    # Uncomment to build locally instead of using pre-built image
-    # build: 
-    #   context: .
-    #   dockerfile: Dockerfile
+    # image: truongginjs/ocr-converter:latest
+    # Build locally to ensure ARM64 compatibility
+    build: 
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     volumes:
@@ -17,11 +17,11 @@ services:
     
   # CLI version for batch processing
   document-converter-cli:
-    image: truongginjs/ocr-converter:latest
-    # Uncomment to build locally instead of using pre-built image
-    # build: 
-    #   context: .
-    #   dockerfile: Dockerfile
+    # image: truongginjs/ocr-converter:latest
+    # Build locally to ensure ARM64 compatibility
+    build: 
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - ./data:/app/input:ro
       - ./output:/app/output
@@ -34,7 +34,11 @@ services:
 
   # Vietnamese language specific service
   document-converter-vie:
-    image: truongginjs/ocr-converter:latest
+    # image: truongginjs/ocr-converter:latest
+    # Build locally to ensure ARM64 compatibility
+    build: 
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8001:8000"
     volumes:
